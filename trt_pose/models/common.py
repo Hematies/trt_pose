@@ -12,16 +12,18 @@ class UpsampleCBR(torch.nn.Sequential):
                 
             layers += [
                 torch.nn.ConvTranspose2d(inch, output_channels, kernel_size=4, stride=2, padding=1),
+                torch.nn.Dropout2d(0.5),
                 # torch.nn.BatchNorm2d(output_channels),
                 torch.nn.ReLU(),
-                torch.nn.BatchNorm2d(output_channels),
+                # torch.nn.BatchNorm2d(output_channels),
             ]
             for i in range(num_flat):
                 layers += [
                     torch.nn.Conv2d(output_channels, output_channels, kernel_size=3, stride=1, padding=1),
+                    torch.nn.Dropout2d(0.5),
                     # torch.nn.BatchNorm2d(output_channels),
                     torch.nn.ReLU(),
-                    torch.nn.BatchNorm2d(output_channels),
+                    # torch.nn.BatchNorm2d(output_channels),
                 ]
             
         super(UpsampleCBR, self).__init__(*layers)
